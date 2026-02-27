@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import os
 import json
 import re
 import requests
 from pathlib import Path
-from typing import List, Dict, Tuple, Optional
-from openai import OpenAI
+from typing import List, Dict, Optional
 
 # -----------------------------
 # CONFIG
@@ -17,10 +15,11 @@ STATUTES_DIR = BASE_DIR / "data" / "statutes"
 ENDEE_BASE_URL = "http://localhost:8080"
 INDEX_NAME = "legal_index"
 
-openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+OLLAMA_URL = "http://localhost:11434/api/embeddings"
+EMBED_MODEL = "mxbai-embed-large"
 
 # -----------------------------
-# STATUTE REGISTRY LOADER
+# STATUTE REGISTRY
 # -----------------------------
 def _load_statute_registry() -> Dict[str, set]:
     registry = {}
@@ -39,14 +38,17 @@ def _load_statute_registry() -> Dict[str, set]:
 STATUTE_REGISTRY = _load_statute_registry()
 
 # -----------------------------
-# EMBEDDING
+# LOCAL EMBEDDING (OLLAMA)
 # -----------------------------
 def get_embedding(text: str) -> List[float]:
-    response = openai_client.embeddings.create(
-        model="text-embedding-3-small",
-        input=text
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": EMBED_MODEL,
+            "prompt": text
+        }
     )
-    return response.data[0].embedding
+    return response.json()["embedding"]
 
 # -----------------------------
 # ENDEE SEARCH
@@ -102,12 +104,6 @@ def _statute_section_valid(statute: str, section_no: Optional[str]) -> bool:
             return section_no in sections
     return False
 
-def _is_declaratory_ica(statute: str, section_no: Optional[str]) -> bool:
-    if not section_no:
-        return False
-    s = statute.lower()
-    return "indian contract act" in s and section_no in DECLARATORY_SECTIONS_ICA
-
 def _semantic_from_distance(d: float) -> float:
     return 1.0 / (1.0 + max(0.0, d))
 
@@ -132,9 +128,9 @@ def classify_domain(query: str) -> str:
     return "general"
 
 # -----------------------------
-# CITATION FILTERING
+# FILTER CITATIONS
 # -----------------------------
-def filter_citations(domain: str, ranked_with_dist, query: str) -> List[Dict]:
+def filter_citations(domain: str, ranked_with_dist) -> List[Dict]:
     scored = []
 
     for metadata, dist in ranked_with_dist:
@@ -146,14 +142,14 @@ def filter_citations(domain: str, ranked_with_dist, query: str) -> List[Dict]:
             if not _statute_section_valid(statute, section_no):
                 continue
 
-        semantic = _semantic_from_distance(dist)
+        semantic_score = _semantic_from_distance(dist)
 
-        scored.append((semantic, {
+        scored.append((semantic_score, {
             "type": metadata.get("type"),
             "identifier": identifier,
             "statute": metadata.get("statute"),
             "source": metadata.get("source"),
-            "relevance_score": round(semantic, 4)
+            "relevance_score": round(semantic_score, 4)
         }))
 
     scored.sort(key=lambda x: x[0], reverse=True)
@@ -172,8 +168,8 @@ def retrieve_for_contract(system_query: str) -> Dict:
             "verdict": "UNKNOWN"
         }
 
-    ranked_with_dist = endee_search(system_query, top_k=20)
-    citations = filter_citations(domain, ranked_with_dist, system_query)
+    ranked = endee_search(system_query, top_k=20)
+    citations = filter_citations(domain, ranked)
 
     if citations:
         return {
