@@ -1,245 +1,246 @@
-SwaRakshak 2.0
-Endee-Powered Retrieval-Augmented Legal Intelligence System
+# SwaRakshak 2.0  
+## Endee-Powered Retrieval-Augmented Legal Intelligence System
 
 SwaRakshak 2.0 is a modular Legal AI backend built on a Retrieval-Augmented Generation (RAG) architecture.
 
-The system leverages the Endee Vector Database for high-performance semantic retrieval and uses a local embedding model via Ollama to enable a fully self-contained, scalable, AI-native legal intelligence pipeline.
+The system integrates the **Endee Vector Database** for high-performance semantic retrieval and uses a **local embedding model via Ollama** to enable a fully self-contained, scalable, AI-native legal intelligence pipeline.
 
-The architecture is designed for structured legal reasoning over constitutional provisions, statutory law, and landmark judicial precedents.
+The architecture is designed for structured legal reasoning across constitutional provisions, statutory law, and landmark judicial precedents.
 
-1. Problem Context
+---
 
-Legal knowledge systems face several structural challenges:
+# Executive Summary
 
-High semantic complexity in statutory language
+SwaRakshak 2.0 solves a core limitation in legal AI systems: keyword-based search is insufficient for semantic reasoning.
 
-Context-sensitive interpretation requirements
+By combining:
 
-Inefficiency of keyword-based search mechanisms
+- Local dense embeddings  
+- Endee high-performance vector indexing  
+- Structured metadata filtering  
+- Context-injected generation  
 
-Lack of evidence-backed AI reasoning systems
+The system ensures legally grounded, citation-backed AI responses.
 
-Traditional relational or lexical search approaches are insufficient for semantic legal analysis.
+---
 
-SwaRakshak 2.0 addresses these limitations using vector-based semantic retrieval integrated with contextual generation.
-
-2. System Architecture
+# System Architecture
 
 The system follows a layered Retrieval-Augmented Generation pipeline:
 
-User Query
-↓
-Query Normalization Layer
-↓
-Local Embedding Generation (Ollama – mxbai-embed-large)
-↓
-Endee Vector Database (Semantic Similarity Search)
-↓
-Top-K Context Retrieval
-↓
-Context Injection into Generator
-↓
-Structured Legal Response
+User Query  
+↓  
+Query Normalization Layer  
+↓  
+Local Embedding Generation (Ollama – mxbai-embed-large)  
+↓  
+Endee Vector Database (Semantic Similarity Search)  
+↓  
+Top-K Context Retrieval  
+↓  
+Context Injection into Generator  
+↓  
+Structured Legal Response  
 
-This architecture ensures that generation is grounded in retrieved legal authority rather than free-form model output.
+This guarantees that model outputs are grounded in retrieved legal authority.
 
-3. Core Architectural Components
-3.1 Embedding Layer
+---
 
-Local embedding model: mxbai-embed-large
+# Core Architectural Components
 
-Executed via Ollama
+| Component | Description | Responsibility |
+|------------|------------|----------------|
+| Embedding Layer | Local embedding via Ollama | Converts text into dense vectors |
+| Endee Vector DB | High-performance vector search | Stores & retrieves embeddings |
+| Retrieval Engine | Semantic ranking + validation | Filters and scores citations |
+| Generator Module | Context-aware reasoning | Produces structured legal output |
+| API Layer | FastAPI backend | Exposes endpoints |
 
-No dependency on external embedding APIs
+---
 
-Deterministic vector dimension for index consistency
+# Embedding Layer
 
-3.2 Endee Vector Database
+- Model: `mxbai-embed-large`
+- Executed locally via Ollama
+- No dependency on OpenAI or external embedding APIs
+- Deterministic embedding dimension for index consistency
 
-High-dimensional vector indexing
+---
 
-Efficient similarity-based retrieval
+# Endee Vector Database
 
-Metadata-backed citation filtering
+- High-dimensional vector storage
+- Efficient similarity search
+- Metadata-backed citation filtering
+- Docker-based deployment
+- Designed for scalable semantic workloads
 
-Docker-based deployment
+---
 
-Endee serves as the semantic backbone of the retrieval system.
+# Retrieval Intelligence
 
-3.3 Retrieval Engine
+The retrieval engine includes:
 
-Domain classification (contract, employment, labour, constitutional, etc.)
+- Domain classification (contract, employment, labour, constitutional)
+- Section-level validation
+- Semantic scoring based on vector distance
+- Declaratory provision detection
+- Top-k citation filtering
 
-Statute validation and section-level verification
+This ensures legal accuracy and prevents irrelevant retrieval.
 
-Semantic distance scoring
+---
 
-Declaratory provision detection
-
-Top-k citation filtering
-
-3.4 Generation Layer
-
-Context-aware legal explanation
-
-Structured, evidence-backed response format
-
-Modular separation from retrieval logic
-
-3.5 API Layer
-
-FastAPI-based backend
-
-Modular endpoint architecture
-
-Clean separation of services
-
-4. Legal Corpus Structure
+# Legal Corpus Coverage
 
 The system supports structured ingestion of:
 
-Constitutional Articles
+- Constitutional Articles
+- Landmark Supreme Court Judgments
+- Statutory Provisions (Section-wise structured JSON)
 
-Landmark Supreme Court Judgments
+Each document is stored with metadata including:
 
-Statutory Provisions (Section-wise structured JSON)
+- Document type
+- Identifier (Article / Section / Case Name)
+- Statute reference
+- Source attribution
 
-Each document is embedded, indexed in Endee, and stored with structured metadata including:
+---
 
-Document type
+# Project Structure
 
-Identifier (Article / Section / Case Name)
+Backend/  
+├── legalchat/  
+│   ├── api/  
+│   ├── services/  
+│   ├── data/  
+│   ├── memory/  
+│  
+├── LegalAPI/  
+├── Contract_Maker/  
+├── requirements.txt  
+└── .env.example  
 
-Statute reference
+Frontend/  
+└── UI Layer  
 
-Source attribution
+The architecture enforces strict separation between:
 
-5. Project Structure
+- Embedding logic  
+- Vector database integration  
+- Retrieval logic  
+- Generation logic  
+- API exposure  
 
-Backend/
-├── legalchat/
-│ ├── api/
-│ ├── services/
-│ ├── data/
-│ ├── memory/
-│
-├── LegalAPI/
-├── Contract_Maker/
-├── requirements.txt
-└── .env.example
+---
 
-Frontend/
-└── UI Layer
+# Technology Stack
 
-The system maintains strict modular separation between:
+| Layer | Technology |
+|--------|------------|
+| Backend | Python |
+| API | FastAPI |
+| Vector Database | Endee |
+| Embeddings | Ollama (mxbai-embed-large) |
+| Deployment | Docker |
+| Data Format | JSON (Structured Legal Corpus) |
 
-Embedding logic
+---
 
-Vector database client
+# Deployment & Execution Guide
 
-Retrieval layer
+## 1. Start Ollama
 
-Generation logic
+    ollama serve
+    ollama pull mxbai-embed-large
 
-API endpoints
+---
 
-6. Technology Stack
+## 2. Start Endee Vector Database
 
-Python
+    docker run -p 8080:8080 -v endee-data:/data --name endee-server endeeio/endee-server:latest
 
-FastAPI
+---
 
-Endee Vector Database
+## 3. Ingest Legal Corpus into Endee
 
-Ollama (Local Embeddings)
-
-Docker
-
-JSON-based structured legal corpus
-
-Modular RAG architecture
-
-7. Deployment and Execution
-Step 1: Start Ollama
-ollama serve
-ollama pull mxbai-embed-large
-Step 2: Start Endee
-docker run -p 8080:8080 -v endee-data:/data --name endee-server endeeio/endee-server:latest
-Step 3: Ingest Legal Data
-python legalchat/services/endee_ingest.py
+    python legalchat/services/endee_ingest.py
 
 This step:
+- Generates embeddings
+- Creates Endee index
+- Uploads vectors with metadata
 
-Generates embeddings
+---
 
-Creates Endee index
+## 4. Start Backend API
 
-Uploads vectors with metadata
+    uvicorn legalchat.api.main:app --reload
 
-Step 4: Run Backend API
-uvicorn legalchat.api.main:app --reload
-8. Example Query Flow
+---
 
-Example Query:
+# Example Query Execution
 
-"Is Right to Privacy a fundamental right in India?"
+Query:
 
-Execution Steps:
+    Is Right to Privacy a fundamental right in India?
 
-Query normalized into structured legal terms
+System Flow:
 
-Embedding generated locally
+1. Query rewritten into legal terminology  
+2. Embedding generated locally  
+3. Semantic similarity search executed in Endee  
+4. Relevant constitutional provisions retrieved  
+5. Context injected into generator  
+6. Structured explanation returned  
 
-Semantic similarity search executed in Endee
+---
 
-Relevant constitutional provisions and judgments retrieved
+# Why Vector-Based Legal Retrieval?
 
-Context injected into generation layer
+Traditional databases fail in legal reasoning because:
 
-Structured legal explanation returned with citations
+- Legal meaning depends on semantic similarity  
+- Context matters more than keyword overlap  
+- Cross-document reasoning is required  
 
-9. Design Rationale
+Endee enables:
 
-Vector-based retrieval is essential for legal reasoning systems because:
+- High-dimensional similarity indexing  
+- Efficient retrieval at scale  
+- AI-native backend design  
 
-Legal language relies on semantic similarity rather than keyword overlap
+---
 
-Contextual interpretation requires cross-document reasoning
+# Security & Operational Design
 
-Scalable legal intelligence requires high-dimensional vector indexing
+- No mandatory external embedding APIs
+- Local embedding execution
+- Environment-based configuration
+- Modular service separation
+- Reproducible Docker-based deployment
 
-Endee provides an optimized, production-grade vector database that supports this architecture efficiently.
+---
 
-10. Security and Operational Considerations
+# Future Enhancements
 
-No mandatory external embedding API dependency
+- Hybrid Search (Semantic + Lexical Fusion)
+- Confidence scoring system
+- Multi-document PDF ingestion
+- Domain fine-tuned legal embeddings
+- Agentic AI workflow integration
 
-Local embedding execution via Ollama
+---
 
-Environment-based configuration management
+# Disclaimer
 
-Modular and extensible service architecture
+This project is developed for educational and research purposes only and does not constitute legal advice.
 
-Clean separation between ingestion, retrieval, and generation layers
+---
 
-11. Future Enhancements
+# Author
 
-Hybrid retrieval (lexical + semantic fusion)
-
-Confidence scoring mechanism
-
-Multi-document PDF ingestion pipeline
-
-Fine-tuned domain-specific legal embeddings
-
-Agentic AI workflow integration
-
-Disclaimer
-
-This system is developed for educational and research purposes and does not constitute legal advice.
-
-Author
-
-Akshat Awasthi
-AI/ML Engineer
+Akshat Awasthi  
+AI/ML Engineer  
 Legal AI Systems | Vector-Based Architectures
