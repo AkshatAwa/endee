@@ -1,0 +1,21 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Vector DB / local storage
+*.pkl
+*.faiss
+
+# Env files
+.env
+
+# IDE
+.idea/
+.vscode/
+.ruff_cache/
+
+# OS
+.DS_Store

@@ -1,0 +1,120 @@
+{
+  "contract_type": "Non Disclosure Agreement",
+  "jurisdiction": "India",
+  "governing_law": "Indian Contract Act, 1872",
+  "variables": {
+    "party1_name": null,
+    "party1_address": null,
+    "party2_name": null,
+    "party2_address": null,
+    "proposed_transaction": null,
+    "execution_date": null
+  },
+  "clauses": [
+    {
+      "clause_number": "P",
+      "title": "Preamble",
+      "text": "Non-Disclosure Agreement This Agreement made on this the _________ day of _________, 2016 By and Between <Party 1>, a company incorporated under the Companies Act, 1956 and having its registered office at <<address>> (hereinafter referred to as “____”, which expression shall unless repugnant to the context or meaning thereof, include its successors in interests and assigns) of the one part; And [Please fill in Customers name] a company incorporated under the Companies Act, 2013 and having its registered office at [Please fill in address] (hereinafter referred to as “Company” which expression shall, unless repugnant to the context or meaning thereof, be deemed to include, its representatives and permitted assigns) of the Other part; PARTY 1 and COMPANY shall hereinafter be referred to as such or collectively as “Parties” and individually as “Party”. WHEREAS both the Parties herein wish to pursue discussions and negotiate with each other for the purpose of entering into a potential business arrangement in relation to [Please fill in details of proposed transaction] (“Proposed Transaction”); AND WHEREAS the Parties contemplate that with respect to the Proposed Transaction, both the Parties may exchange certain information, material and documents relating to each other’s business, assets, financial condition, operations, plans and/or prospects of their businesses (hereinafter referred to as “Confidential Information”, more fully detailed in clause 1 herein below) that each Party regards as proprietary and confidential; AND WHEREAS, each Party wishes to review such Confidential Information of the other for the sole purpose of determining their mutual interest in engaging in the Proposed Transaction; IN CONNECTION WITH THE ABOVE, THE PARTIES HEREBY AGREE AS FOLLOWS:"
+    },
+    {
+      "clause_number": "1",
+      "title": "Definition of Confidential Information",
+      "text": "“Confidential and or proprietary Information” shall mean and include any information disclosed by one Party (Disclosing Party) to the other (Receiving Party) either directly or indirectly, in writing, orally, by inspection of tangible objects (including, without limitation, documents, prototypes, samples, media, documentation, discs and code). Confidential information shall include, without limitation, any materials, trade secrets, network information, configurations, trademarks, brand name, know-how, business and marketing plans, financial and operational information, and all other non-public information, material or data relating to the current and/ or future business and operations of the Disclosing Party and analysis, compilations, studies, summaries, extracts or other documentation prepared by the Disclosing Party. Confidential Information may also include information disclosed to the Receiving Party by third parties on behalf of the Disclosing Party."
+    },
+    {
+      "clause_number": "2",
+      "title": "Non-Disclosure Obligation",
+      "text": "The Receiving Party shall refrain from disclosing, reproducing, summarising and/or distributing Confidential Information and confidential materials of the Disclosing Party except in connection with the Proposed Transaction."
+    },
+    {
+      "clause_number": "3",
+      "title": "Standard of Care and Ownership",
+      "text": "The Parties shall protect the confidentiality of each other’s Confidential Information in the same manner as they protect the confidentiality of their own proprietary and confidential information of similar nature. Each Party, while acknowledging the confidential and proprietary nature of the Confidential Information agrees to take all reasonable measures at its own expense to restrain its representatives from prohibited or unauthorised disclosure or use of the Confidential Information. Confidential Information shall at all times remain the property of the Disclosing Party and may not be copied or reproduced by the Receiving Party without the Disclosing Party’s prior written consent."
+    },
+    {
+      "clause_number": "5",
+      "title": "Return or Destruction of Confidential Information",
+      "text": "Within seven (7) days of a written request by the Disclosing Party, the Receiving Party shall return/destroy (as may be requested in writing by the Disclosing Party or upon expiry and or earlier termination) all originals, copies, reproductions and summaries of Confidential Information provided to the Receiving Party as Confidential Information. The Receiving Party shall certify to the Disclosing Party in writing that it has satisfied its obligations under this paragraph."
+    },
+    {
+      "clause_number": "6",
+      "title": "Permitted Disclosure",
+      "text": "The Receiving Party may disclose the Confidential Information only to the Receiving Party's employees and consultants on a need-to-know basis. The Receiving Party shall have executed or shall execute appropriate written agreements with third parties, in a form and manner sufficient to enable the Receiving Party to enforce all the provisions of this Agreement."
+    },
+    {
+      "clause_number": "7",
+      "title": "Exclusions from Confidential Information",
+      "text": "Confidential Information, however, shall not include any information which the Receiving Party can show: (i) is in or comes into the public domain otherwise than through a breach of this Agreement or the fault of the Receiving Party; (ii) was already in its possession free of any such restriction prior to receipt from the Disclosing Party; (iii) was independently developed by the Receiving Party without making use of the Confidential Information; or (iv) has been approved for release or use by written authorisation of the Disclosing Party."
+    },
+    {
+      "clause_number": "8",
+      "title": "Disclosure Required by Law",
+      "text": "In the event either Party receives a summons or other validly issued administrative or judicial process requiring the disclosure of Confidential Information of the other Party, the Receiving Party shall promptly notify the Disclosing Party. The Receiving Party may disclose Confidential Information to the extent such disclosure is required by law, rule, regulation or legal process; provided however, that to the extent practicable the Receiving Party shall give prompt written notice and co-operate with the Disclosing Party to challenge or limit the disclosure."
+    },
+    {
+      "clause_number": "9",
+      "title": "Use of Name and Trademarks",
+      "text": "Neither Party shall use the other’s name, trademarks, proprietary words or symbols or disclose under this Agreement in any publication, press release, marketing material, or otherwise without the prior written approval of the other."
+    },
+    {
+      "clause_number": "10",
+      "title": "Injunctive Relief",
+      "text": "Each Party agrees that the conditions in this Agreement and the Confidential Information disclosed pursuant to this Agreement are of a special, unique, and extraordinary character and that an impending or existing violation of any provision of this Agreement would cause the other Party irreparable injury for which it would have no adequate remedy at law and that injunctive relief may be sought."
+    },
+    {
+      "clause_number": "11",
+      "title": "Indemnification",
+      "text": "The Receiving Party shall indemnify the Disclosing Party for all costs, expenses or damages that the Disclosing Party incurs as a result of any violation of any provisions of this Agreement, including court and litigation expenses and reasonable attorney’s fees."
+    },
+    {
+      "clause_number": "12",
+      "title": "Limitation of Liability",
+      "text": "Neither Party shall be liable for any special, consequential, incidental or exemplary damages or loss regardless of whether a Party was advised of the possibility of such loss."
+    },
+    {
+      "clause_number": "13",
+      "title": "No Obligation to Disclose",
+      "text": "Both the Parties agree that neither Party is obligated to disclose all or any of the Confidential Information to the other and may disclose only such information as it deems necessary for the Proposed Transaction."
+    },
+    {
+      "clause_number": "14",
+      "title": "Term and Survival",
+      "text": "Both the Parties agree that this Agreement will be effective from the date of execution of this Agreement by both Parties and shall continue to be effective till the Proposed Transaction is terminated by either Party by giving a thirty (30) days notice. Notwithstanding anything contained herein, the provisions of this Agreement shall survive and continue after expiration or termination of this Agreement for a further period of five year(s) from the date of expiration."
+    },
+    {
+      "clause_number": "15",
+      "title": "Authority",
+      "text": "Each Party warrants that it has the authority to enter into this Agreement."
+    },
+    {
+      "clause_number": "16",
+      "title": "Severability",
+      "text": "If any provision of this Agreement is held to be invalid or unenforceable to any extent, the remainder of this Agreement shall not be affected and shall remain enforceable to the fullest extent permitted by law."
+    },
+    {
+      "clause_number": "17",
+      "title": "Counterparts",
+      "text": "This Agreement may be executed in two counterparts, each of which shall be deemed to be an original and together shall constitute one and the same agreement."
+    },
+    {
+      "clause_number": "18",
+      "title": "Relationship of Parties",
+      "text": "The relationship between both the Parties to this Agreement shall be on a principal-to-principal basis and nothing in this Agreement shall be deemed to create a partnership or agency relationship."
+    },
+    {
+      "clause_number": "19",
+      "title": "Governing Law and Jurisdiction",
+      "text": "This Agreement shall be governed by the laws of India. Both Parties irrevocably submit to the exclusive jurisdiction of the Courts in Bangalore. Any dispute shall be settled by arbitration under the Arbitration and Conciliation Act, 1996."
+    },
+    {
+      "clause_number": "20",
+      "title": "Entire Agreement",
+      "text": "Additional oral agreements do not exist and all modifications and amendments to this Agreement must be made in writing."
+    },
+    {
+      "clause_number": "21",
+      "title": "Assignment",
+      "text": "The Agreement and/or any rights arising from it cannot be assigned or otherwise transferred either wholly or in part without the written consent of the other Party."
+    }
+  ]
+}

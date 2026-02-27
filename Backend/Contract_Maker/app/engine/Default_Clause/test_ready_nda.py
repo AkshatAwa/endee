@@ -1,0 +1,113 @@
+from fastapi import APIRouter, Header, HTTPException
+from Backend.LegalAPI.app.auth.api_key import validate_api_key
+
+from Backend.Contract_Maker.app.engine.Default_Clause.generate_nda import generate_nda_json
+from Backend.Contract_Maker.app.engine.Default_Clause.nda_pdf import generate_nda_pdf
+from Backend.Contract_Maker.app.engine.Custom_Clause.clause_pipeline import process_user_prompt
+
+import os, json, uuid
+
+router = APIRouter(prefix="/v1/draft", tags=["Contract Drafting"])
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+
+OUTPUT_DIR = os.path.join(
+    BASE_DIR, "Contract_Maker", "app", "engine", "output"
+)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+
+# ---------------------------
+# AUTH HELPER
+# ---------------------------
+def auth_check(auth: str):
+    if not auth:
+        raise HTTPException(status_code=401, detail="API key missing")
+    api_key = auth.replace("Bearer ", "")
+    if not validate_api_key(api_key):
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
+
+# =====================================================
+# DEFAULT NDA – PREVIEW
+# =====================================================
+@router.post("/default/preview")
+def preview_default_nda(payload: dict, authorization: str = Header(None)):
+    auth_check(authorization)
+
+    nda = generate_nda_json(payload)
+    return {
+        "status": "preview",
+        "nda": nda
+    }
+
+
+# =====================================================
+# DEFAULT NDA – GENERATE PDF
+# =====================================================
+@router.post("/default/generate")
+def generate_default_nda(payload: dict, authorization: str = Header(None)):
+    auth_check(authorization)
+
+    nda = generate_nda_json(payload)
+
+    file_id = uuid.uuid4().hex[:8]
+    pdf_path = os.path.join(OUTPUT_DIR, f"nda_{file_id}.pdf")
+
+    generate_nda_pdf(nda, pdf_path)
+
+    return {
+        "status": "generated",
+        "download_url": f"/v1/draft/download/{file_id}"
+    }
+
+
+# =====================================================
+# CUSTOM CLAUSE – PREVIEW
+# =====================================================
+@router.post("/custom/preview")
+def preview_custom_clause(payload: dict, authorization: str = Header(None)):
+    auth_check(authorization)
+
+    base_data = payload.get("base_data")
+    clause_prompt = payload.get("clause_prompt")
+
+    if not base_data or not clause_prompt:
+        raise HTTPException(status_code=400, detail="Invalid payload")
+
+    nda = generate_nda_json(base_data)
+
+    result = process_user_prompt(clause_prompt, nda)
+
+    return {
+        "status": "preview",
+        "analysis": result,
+        "nda": nda
+    }
+
+
+# =====================================================
+# CUSTOM CLAUSE – GENERATE PDF
+# =====================================================
+@router.post("/custom/generate")
+def generate_custom_clause(payload: dict, authorization: str = Header(None)):
+    auth_check(authorization)
+
+    base_data = payload.get("base_data")
+    clause_prompt = payload.get("clause_prompt")
+
+    nda = generate_nda_json(base_data)
+    result = process_user_prompt(clause_prompt, nda)
+
+    if result["status"] != "added":
+        return result
+
+    file_id = uuid.uuid4().hex[:8]
+    pdf_path = os.path.join(OUTPUT_DIR, f"nda_custom_{file_id}.pdf")
+
+    generate_nda_pdf(nda, pdf_path)
+
+    return {
+        "status": "generated",
+        "download_url": f"/v1/draft/download/{file_id}"
+    }
