@@ -41,39 +41,50 @@ STATUTE_REGISTRY = _load_statute_registry()
 # LOCAL EMBEDDING (OLLAMA)
 # -----------------------------
 def get_embedding(text: str) -> List[float]:
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": EMBED_MODEL,
-            "prompt": text
-        }
-    )
-    return response.json()["embedding"]
-
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json={
+                "model": EMBED_MODEL,
+                "prompt": text
+            },
+            timeout=30
+        )
+        response.raise_for_status()
+        return response.json()["embedding"]
+    except Exception as e:
+        raise RuntimeError(f"Ollama embedding failed: {str(e)}")
 # -----------------------------
 # ENDEE SEARCH
 # -----------------------------
 def endee_search(query: str, top_k: int = 20):
-    embedding = get_embedding(query)
+    try:
+        embedding = get_embedding(query)
 
-    response = requests.post(
-        f"{ENDEE_BASE_URL}/api/v1/vector/search",
-        json={
-            "index_name": INDEX_NAME,
-            "vector": embedding,
-            "top_k": top_k
-        }
-    )
+        response = requests.post(
+            f"{ENDEE_BASE_URL}/api/v1/vector/search",
+            json={
+                "index_name": INDEX_NAME,
+                "vector": embedding,
+                "top_k": top_k
+            },
+            timeout=30
+        )
 
-    results = response.json().get("results", [])
+        response.raise_for_status()
 
-    ranked = []
-    for r in results:
-        metadata = r.get("metadata", {})
-        distance = r.get("distance", 0.0)
-        ranked.append((metadata, float(distance)))
+        results = response.json().get("results", [])
 
-    return ranked
+        ranked = []
+        for r in results:
+            metadata = r.get("metadata", {})
+            distance = r.get("distance", 0.0)
+            ranked.append((metadata, float(distance)))
+
+        return ranked
+
+    except Exception as e:
+        raise RuntimeError(f"Endee search failed: {str(e)}") ranked
 
 # -----------------------------
 # UTILITIES
